@@ -1,35 +1,22 @@
-name: Build and Deploy to Azure Web App
+name: Deploy Static HTML to Azure Web App
 
 on:
   push:
     branches:
-      - main  # Ensure this matches the branch you're using
+      - main  # Replace with your branch name if different
 
 jobs:
-  build-and-deploy:
-    runs-on: ubuntu-latest
+  deploy:
+    runs-on: windows-latest  # Matches the OS setup for your Azure App Service
 
     steps:
-      # Checkout the code
+      # Checkout the code from your repository
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # Set up Node.js (if applicable to your project)
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '16.x'  # Update to match your project's Node.js version
-
-      # Install dependencies and build your project
-      - name: Install and build
-        run: |
-          npm install
-          npm run build
-
-      # Deploy to Azure App Service
+      # Deploy static files directly to Azure Web App
       - name: Deploy to Azure
         uses: azure/webapps-deploy@v2
         with:
-          app-name: 'your-app-name'  # Replace with your Azure Web App name
-          slot-name: 'production'   # Adjust if you're using deployment slots
+          app-name: 'Shaving-private-ryan'  # Replace with the exact name of your Azure Web App
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
